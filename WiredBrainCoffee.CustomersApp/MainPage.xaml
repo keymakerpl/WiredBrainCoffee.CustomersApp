@@ -9,6 +9,106 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Button Content="Add Coffee"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" 
+                    Background="Brown" 
+                    Orientation="Horizontal">
+            <Image Source="Images/logo.png" Height="150" Width="150" Margin="15"/>
+            <TextBlock Text="Coffee Customers"
+                       Margin="10 10 10 10"
+                       FontSize="30"
+                       FontWeight="ExtraBold"
+                       Foreground="White"
+                       VerticalAlignment="Center"/>
+            <TextBlock Text="Version 1.0"
+                       Margin="10 10 10 10"
+                       Foreground="AntiqueWhite"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Customers list -->        
+        <Grid Grid.Row="1"
+              x:Name="customerListGrid"
+              Background="BlanchedAlmond"> 
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <!-- x:Name Nazwa elementu, grida -->
+            
+            <!-- Przyciski move, add, remove customer-->
+            <StackPanel Orientation="Horizontal">
+                <Button Grid.Row="0" Grid.Column="0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="10"
+                        Click="ButtonMoveCustomer_Click">
+
+                    <!--> Property buttona </-->
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon Symbol="Forward" x:Name="SymbolIcon"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Grid.Row="0" Grid.Column="0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="10"
+                        Click="ButtonAddCustomer_Click">
+
+                    <!--> Property buttona </-->
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon Symbol="AddFriend"/>
+                            <TextBlock Text="Add" Margin="5 0 0 0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Grid.Row="0" Grid.Column="0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="10"
+                        Click="ButtonRemoveCustomer_Click">
+
+                    <!--> Property buttona </-->
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon Symbol="Delete"/>
+                            <TextBlock Text="Delete" Margin="5 0 0 0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+            
+            <!-- Lista customerów -->
+            <ListView Grid.Row="1" x:Name="customerListView"
+                      DisplayMemberPath="FirstName"
+                      SelectionChanged="CustomerListView_OnSelectionChanged"/>
+
+        </Grid>
+
+        <!-- Customer detail -->
+        <StackPanel Grid.Row="1"
+                Grid.Column="1">
+            <TextBox Header="Firstname" Margin="5 5 5 5" x:Name="txtFirstName"
+                     TextChanged="TxtFirstName_OnTextChanged"/>
+            <TextBox Header="Lastname" Margin="5 5 5 5" x:Name="txtLastName"
+                     TextChanged="TxtLastName_OnTextChanged"/>
+            <CheckBox Content="Is developer" Margin="5 5 5 5" x:Name="isDeveloperBox"
+                      Checked="IsDeveloperBox_OnCheckedChanged"
+                      Unchecked="IsDeveloperBox_OnCheckedChanged"/>
+        </StackPanel>
+
     </Grid>
 </Page>
