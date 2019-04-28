@@ -41,16 +41,20 @@ namespace WiredBrainCoffee.CustomersApp
             }
         }
 
-        private async void ButtonAddCustomer_Click(object sender, RoutedEventArgs e)
+        private void ButtonAddCustomer_Click(object sender, RoutedEventArgs e)
         {
-            var messageDialog = new MessageDialog("Customer Added");
-            await messageDialog.ShowAsync();
+            var customer = new Customer{FirstName = "New"};
+            customerListView.Items.Add(customer);
+            customerListView.SelectedItem = customer;
         }
 
-        private async void ButtonRemoveCustomer_Click(object sender, RoutedEventArgs e)
+        private void ButtonRemoveCustomer_Click(object sender, RoutedEventArgs e)
         {
-            var messageDialog = new MessageDialog("Customer Removed");
-            await messageDialog.ShowAsync();
+            var selectedCustomer = customerListView.SelectedItem as Customer;
+            if (selectedCustomer != null)
+            {
+                customerListView.Items.Remove(selectedCustomer);
+            }
         }
 
         private void ButtonMoveCustomer_Click(object sender, RoutedEventArgs e)
@@ -65,37 +69,10 @@ namespace WiredBrainCoffee.CustomersApp
 
         private void CustomerListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var customer = customerListView.SelectedItem as Customer;
-
-            txtFirstName.Text = customer?.FirstName ?? "";
-            txtLastName.Text = customer?.LastName ?? "";
-            isDeveloperBox.IsChecked = customer?.IsDeveloper ?? false;
-        }
-
-        private void TxtFirstName_OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            UpdateCustomer();
-        }
-
-        private void TxtLastName_OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-           UpdateCustomer();
-        }
-
-        private void IsDeveloperBox_OnCheckedChanged(object sender, RoutedEventArgs e)
-        {
-            UpdateCustomer();
-        }
-
-        private void UpdateCustomer()
-        {
             var selectedCustomer = customerListView.SelectedItem as Customer;
-            if (selectedCustomer != null)
-            {
-                selectedCustomer.FirstName = txtFirstName.Text;
-                selectedCustomer.LastName = txtLastName.Text;
-                selectedCustomer.IsDeveloper = isDeveloperBox.IsChecked.GetValueOrDefault();
-            }
+            CustomerDetailControl.Customer = selectedCustomer;
+
         }
+        
     }
 }
